@@ -1,0 +1,20 @@
+.layout-main-container {
+  padding: 6rem 1rem 1rem 2rem;
+}
+
+.layout-sidebar {
+  top: 6rem;
+  left: 1rem;
+}
+
+.layout-topbar .layout-topbar-logo {
+  width: 220px;
+}
+
+.layout-sidebar {
+  height: calc(100vh - 7rem);
+}
+
+.form p {
+  margin-bottom: 0;
+}
