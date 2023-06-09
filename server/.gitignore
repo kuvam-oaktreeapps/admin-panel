@@ -8,3 +8,4 @@ mongo_db_volume
 WinstonLogs
 .nyc_output
 package-lock.json
+.idea
