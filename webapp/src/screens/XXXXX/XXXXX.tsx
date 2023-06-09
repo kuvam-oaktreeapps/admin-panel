@@ -206,14 +206,6 @@ const XXXXX = () => {
             responsiveLayout="scroll"
           >
             <Column selectionMode="multiple" headerStyle={{ width: "4rem" }}></Column>
-            <Column
-              field="name"
-              header="Name"
-              sortable
-              body={(rowData) => textBodyTemplate(rowData, "name")}
-              headerStyle={{ minWidth: "15rem" }}
-            ></Column>
-            <Column header="Image" body={(rowData) => imageBodyTemplate(rowData, "image")}></Column>
             {/*TABLE_COLUMNS*/}
             <Column header="Action" body={actionBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
           </DataTable>

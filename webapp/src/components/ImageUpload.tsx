@@ -97,7 +97,7 @@ export default function ImageUpload({ folder, fieldName, submitted, entity, onUp
 
         <p>{getLabel(fieldName)}</p>
         <FileUpload
-          className={classNames({ "p-invalid": submitted && !entity[fieldName], "-mt-3 w-full": true })}
+          className={classNames({ "p-invalid": submitted && !entity[fieldName], "w-full": true })}
           accept="image/*"
           mode="advanced"
           customUpload
