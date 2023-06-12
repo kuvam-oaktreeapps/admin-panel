@@ -3,7 +3,6 @@ import * as sinon from "sinon";
 import { ExpressAppServer } from "../CommonHttpServer/ExpressAppServer";
 import { MongoDbConnections } from "../Database/MongoDbConnections";
 import { Logger } from "../Utils/Logger";
-import { EmailChannel } from "../Utils/NotificationChannels/EmailChannel";
 import mongoose from "mongoose";
 import { expect } from "chai";
 import { UnitTestHelper } from "./UnitTestHelper";
@@ -17,7 +16,6 @@ export class ApiUnitTestUtils {
   public loggerInfoStub: sinon.SinonStub;
   public loggerWarnStub: sinon.SinonStub;
   public loggerHttpStub: sinon.SinonStub;
-  public sendEmailStub: sinon.SinonStub;
 
   constructor() {
     this.mongooseConnectionStub = sinon
@@ -26,7 +24,6 @@ export class ApiUnitTestUtils {
     this.loggerInfoStub = sinon.stub(Logger, "info");
     this.loggerWarnStub = sinon.stub(Logger, "warn");
     this.loggerHttpStub = sinon.stub(Logger, "http");
-    this.sendEmailStub = sinon.stub(EmailChannel, "sendHtml");
     this.expressAppServer = new ExpressAppServer(0, "love_works_REST_app");
   }
 
@@ -44,7 +41,6 @@ export class ApiUnitTestUtils {
     this.mongooseConnectionStub.restore();
     await this.expressAppServer.closeHttpServer();
 
-    this.sendEmailStub.restore();
     this.loggerInfoStub.restore();
     this.loggerWarnStub.restore();
     this.loggerHttpStub.restore();
