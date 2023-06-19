@@ -11,10 +11,7 @@ export const RequestHandler = {
     try {
       const authorizationHeader = req.headers["authorization"] as string;
 
-      if (
-        authorizationHeader &&
-        authorizationHeader.split(" ")[0] === "Bearer"
-      ) {
+      if (authorizationHeader && authorizationHeader.split(" ")[0] === "Bearer") {
         return authorizationHeader.trim().split(" ")[1] || null;
       }
     } catch (error) {}

@@ -6,9 +6,7 @@ import { IsOptional2 } from "../Common.dto";
 export class AdminUserLoginDto {
   @IsEmail()
   @IsNotEmpty()
-  @Transform(({ value }) =>
-    typeof value === "string" ? value.toLowerCase().trim() : value
-  )
+  @Transform(({ value }) => (typeof value === "string" ? value.toLowerCase().trim() : value))
   emailId!: string;
 
   @IsString()

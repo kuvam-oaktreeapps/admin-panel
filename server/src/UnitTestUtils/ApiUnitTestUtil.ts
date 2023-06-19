@@ -84,10 +84,10 @@ export class ApiUnitTestUtils {
     data: {
       userId?: mongoose.Types.ObjectId;
       authorizationRole?: AuthorizationRole;
-    }
+    },
   ) {
     const verifyToken = stubContext(JwtUtils, "verifyJWTToken").resolves(
-      UnitTestHelper.getJwtVerifyResponse(data)
+      UnitTestHelper.getJwtVerifyResponse(data),
     );
 
     return verifyToken;

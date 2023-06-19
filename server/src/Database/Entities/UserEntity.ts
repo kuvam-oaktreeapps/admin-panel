@@ -22,7 +22,7 @@ export const UserSchema: Schema = new Schema<IUserEntity>(
   {
     timestamps: true,
     strict: true,
-  }
+  },
 );
 
 MongoUtils.runValidatorForSchema(UserSchema);
@@ -33,7 +33,7 @@ export const UserModel = (): Model<IUserEntity> => {
   if (!model) {
     model = MongoDbConnections.OaktreeApps.getConnection().model(
       CollectionNames.UserCollection,
-      UserSchema
+      UserSchema,
     );
   }
 

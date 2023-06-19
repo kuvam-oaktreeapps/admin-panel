@@ -18,7 +18,7 @@ export const UserSchema: Schema = new Schema<ICategoryEntity>(
   {
     timestamps: true,
     strict: true,
-  }
+  },
 );
 
 MongoUtils.runValidatorForSchema(UserSchema);
@@ -29,7 +29,7 @@ export const CategoryModel = (): Model<ICategoryEntity> => {
   if (!model) {
     model = MongoDbConnections.OaktreeApps.getConnection().model(
       CollectionNames.CategoryCollection,
-      UserSchema
+      UserSchema,
     );
   }
 

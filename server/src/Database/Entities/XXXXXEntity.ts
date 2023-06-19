@@ -14,7 +14,7 @@ export const XXXXXSchema: Schema = new Schema<IXXXXXEntity>(
   {
     timestamps: true,
     strict: true,
-  }
+  },
 );
 
 MongoUtils.runValidatorForSchema(XXXXXSchema);
@@ -25,7 +25,7 @@ export const XXXXXModel = (): Model<IXXXXXEntity> => {
   if (!model) {
     model = MongoDbConnections.OaktreeApps.getConnection().model(
       CollectionNames.XXXXXCollection,
-      XXXXXSchema
+      XXXXXSchema,
     );
   }
 

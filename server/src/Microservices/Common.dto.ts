@@ -1,10 +1,4 @@
-import {
-  IsInt,
-  Max,
-  Min,
-  ValidateIf,
-  ValidationOptions,
-} from "class-validator";
+import { IsInt, Max, Min, ValidateIf, ValidationOptions } from "class-validator";
 
 export class PaginationDto {
   @IsInt()

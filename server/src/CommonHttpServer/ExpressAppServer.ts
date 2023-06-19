@@ -67,7 +67,7 @@ export class ExpressAppServer {
             this.app.use(
               cors({
                 origin: "*",
-              })
+              }),
             );
 
             const morganMessageFormatter: morgan.FormatFn = function (tokens, req, res) {

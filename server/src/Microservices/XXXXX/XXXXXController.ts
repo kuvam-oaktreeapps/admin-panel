@@ -9,10 +9,7 @@ import {
   UpdateXXXXXDto,
   DeleteManyXXXXXDto,
 } from "./XXXXX.dto";
-import {
-  XXXXXModel,
-  IXXXXXEntity,
-} from "../../Database/Entities/XXXXXEntity";;
+import { XXXXXModel, IXXXXXEntity } from "../../Database/Entities/XXXXXEntity";
 
 const tag = "XXXXXController";
 
@@ -21,9 +18,7 @@ export const XXXXXController = {
     try {
       const entityList = await XXXXXModel().find().sort({ orderNo: 1 });
 
-      const data: XXXXXI[] = entityList.map((entity) =>
-        this.getEntityResponseDto(entity)
-      );
+      const data: XXXXXI[] = entityList.map((entity) => this.getEntityResponseDto(entity));
 
       return {
         status: HttpStatusCodes.OK,
@@ -56,7 +51,7 @@ export const XXXXXController = {
 
   async update(input: UpdateXXXXXDto): Promise<ApiResponseI> {
     try {
-      const { id, /*UNIQUE_FIELDS*/ } = input;
+      const { id /*UNIQUE_FIELDS*/ } = input;
 
       const entity = await XXXXXModel().findById(id);
 
@@ -71,7 +66,7 @@ export const XXXXXController = {
 
       const updatedEntity = await XXXXXModel().findOneAndUpdate(
         { _id: id },
-        { ...this.getEntityWithoutId(input as any) }
+        { ...this.getEntityWithoutId(input as any) },
       );
 
       if (!updatedEntity) {
@@ -104,8 +99,8 @@ export const XXXXXController = {
       const { ids } = input;
 
       const mapping = await XXXXXModel().deleteMany({
-        _id: { $in: ids }
-      })
+        _id: { $in: ids },
+      });
 
       if (!mapping || mapping.deletedCount === 0) {
         return {
@@ -181,5 +176,5 @@ export const XXXXXController = {
     const data = this.getEntityResponseDto(entity);
     const { id, ...rest } = data;
     return rest;
-  }
+  },
 };

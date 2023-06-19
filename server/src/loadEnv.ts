@@ -16,11 +16,7 @@ export enum ENV_NAMES {
 export const APP_ENV = ENV_NAMES.DEVELOPMENT;
 
 if (Object.values(ENV_NAMES).indexOf(APP_ENV) == -1) {
-  throw new Error(
-    `Invalid ENV Name :${APP_ENV},valid names are : [${Object.values(
-      ENV_NAMES
-    )}] `
-  );
+  throw new Error(`Invalid ENV Name :${APP_ENV},valid names are : [${Object.values(ENV_NAMES)}] `);
 }
 
 import { Logger } from "./Utils/Logger";

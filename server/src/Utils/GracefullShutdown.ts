@@ -34,8 +34,7 @@ export class GraceFullShutDown {
 
     process.on("SIGTERM", () => {
       Logger.info({
-        message:
-          "Received SIGTERM signal to terminate the application gracefully",
+        message: "Received SIGTERM signal to terminate the application gracefully",
         tag: this.tag,
       });
       this.shutDown("From SIGTERM signal");

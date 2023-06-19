@@ -18,7 +18,7 @@ export const AdminUserSchema: Schema = new Schema(
   {
     timestamps: true,
     strict: true,
-  }
+  },
 );
 
 MongoUtils.runValidatorForSchema(AdminUserSchema);
@@ -29,7 +29,7 @@ export const AdminUserModel = (): Model<IAdminUserEntity> => {
   if (!model) {
     model = MongoDbConnections.OaktreeApps.getConnection().model(
       CollectionNames.AdminUserCollection,
-      AdminUserSchema
+      AdminUserSchema,
     );
   }
   return model;

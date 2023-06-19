@@ -2,10 +2,7 @@ import { AuthTokenI, JwtConfigMap, JwtTokenTypes } from "./JwtConfig";
 import { JwtUtils } from "./JwtUtils";
 import { Logger } from "../Utils/Logger";
 import express, { NextFunction } from "express";
-import {
-  ApiResponseI,
-  ResponseHandler,
-} from "../CommonHttpServer/ResponseHandler";
+import { ApiResponseI, ResponseHandler } from "../CommonHttpServer/ResponseHandler";
 import { AuthorizationRole, HttpStatusCodes } from "../CommonConstants";
 import { RequestHandler } from "../CommonHttpServer/RequestHandler";
 // import { BlackListedJwtEntity } from "../Redis/Entities/BlackListedJwtEntity";
@@ -16,7 +13,7 @@ export const JwtController = {
   async createToken(
     tokenType: JwtTokenTypes,
     payloadBody: any,
-    expiryTimeInSecs: number
+    expiryTimeInSecs: number,
   ): Promise<string> {
     try {
       const jwtConfig = JwtConfigMap[tokenType];
@@ -26,11 +23,7 @@ export const JwtController = {
       }
 
       payloadBody.tokenType = tokenType;
-      return await JwtUtils.generateJWTToken(
-        payloadBody,
-        jwtConfig.privateKey,
-        expiryTimeInSecs
-      );
+      return await JwtUtils.generateJWTToken(payloadBody, jwtConfig.privateKey, expiryTimeInSecs);
     } catch (error) {
       Logger.warn({ message: "createToken Failed", tag, error });
       throw error;
@@ -40,25 +33,20 @@ export const JwtController = {
   validateTokenMiddleware: function (
     tokenType: JwtTokenTypes,
     allowedAuthRoles?: AuthorizationRole[],
-    allowExpired = false
+    allowExpired = false,
   ) {
-    return async (
-      req: express.Request,
-      res: express.Response,
-      next: NextFunction
-    ) => {
+    return async (req: express.Request, res: express.Response, next: NextFunction) => {
       try {
         const jwtConfig = JwtConfigMap[tokenType];
         if (!jwtConfig.publicKey) {
           throw new Error("Missing JWT Public key");
         }
 
-        let { errorMessage, isVerified, payload, errCode } =
-          await JwtUtils.verifyJWTToken(
-            RequestHandler.getAccessToken(req),
-            jwtConfig.publicKey,
-            allowExpired
-          );
+        let { errorMessage, isVerified, payload, errCode } = await JwtUtils.verifyJWTToken(
+          RequestHandler.getAccessToken(req),
+          jwtConfig.publicKey,
+          allowExpired,
+        );
 
         if (isVerified && payload && payload.tokenType != tokenType) {
           errorMessage = "Token Mismatch";
@@ -72,8 +60,7 @@ export const JwtController = {
           tokenType === JwtTokenTypes.AUTH_TOKEN &&
           allowedAuthRoles &&
           allowedAuthRoles.length > 0 &&
-          allowedAuthRoles.indexOf((payload as AuthTokenI).authorizationRole) ==
-            -1
+          allowedAuthRoles.indexOf((payload as AuthTokenI).authorizationRole) == -1
         ) {
           errorMessage = "Access Forbidden";
           isVerified = false;
@@ -135,13 +122,10 @@ export const JwtController = {
       const { isVerified, payload } = await JwtUtils.verifyJWTToken(
         token,
         jwtConfig.publicKey,
-        false
+        false,
       );
 
-      if (
-        isVerified &&
-        (payload as AuthTokenI).authorizationRole == AuthorizationRole.USER
-      ) {
+      if (isVerified && (payload as AuthTokenI).authorizationRole == AuthorizationRole.USER) {
         RequestHandler.setJwtPayload(req, payload);
         return true;
       } else {

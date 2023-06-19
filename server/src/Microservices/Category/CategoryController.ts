@@ -9,10 +9,7 @@ import {
   GetCategoryByIdDto,
   UpdateCategoryDto,
 } from "./Category.dto";
-import {
-  CategoryModel,
-  ICategoryEntity,
-} from "../../Database/Entities/CategoryEntity";
+import { CategoryModel, ICategoryEntity } from "../../Database/Entities/CategoryEntity";
 import { GetUserProfileResponseI } from "../User/User.dto";
 
 const tag = "XXXXController";
@@ -23,7 +20,7 @@ export const CategoryController = {
       const categoryList = await CategoryModel().find().sort({ orderNo: 1 });
 
       const data: CategoryI[] = categoryList.map((category) =>
-        this.getCategoryResponseDto(category)
+        this.getCategoryResponseDto(category),
       );
 
       return {
@@ -41,10 +38,9 @@ export const CategoryController = {
     try {
       const { name, description, image } = input;
 
-      const existingCategoryWithSameName: ICategoryEntity | null =
-        await CategoryModel().findOne({
-          name,
-        });
+      const existingCategoryWithSameName: ICategoryEntity | null = await CategoryModel().findOne({
+        name,
+      });
 
       if (existingCategoryWithSameName) {
         return {
@@ -84,11 +80,10 @@ export const CategoryController = {
         };
       }
 
-      const existingCategoryWithSameName: ICategoryEntity | null =
-        await CategoryModel().findOne({
-          name,
-          _id: { $ne: id },
-        });
+      const existingCategoryWithSameName: ICategoryEntity | null = await CategoryModel().findOne({
+        name,
+        _id: { $ne: id },
+      });
 
       if (existingCategoryWithSameName) {
         return {
@@ -103,7 +98,7 @@ export const CategoryController = {
           name,
           image,
           description,
-        }
+        },
       );
 
       if (!updatedCategory) {

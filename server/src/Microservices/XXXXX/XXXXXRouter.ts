@@ -17,13 +17,11 @@ import {
 import { XXXXXController } from "./XXXXXController";
 
 const router = express.Router();
-router.use(express.json())
+router.use(express.json());
 
 router.get(
   "/",
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await XXXXXController.index();
@@ -31,69 +29,57 @@ router.get(
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.get(
   "/:entityId",
   validateDtoMiddleware(getXXXXXByIdDto, "params", "zod"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await XXXXXController.getEntityById(
-        (req.params as any as GetXXXXXByIdDto).entityId
+        (req.params as any as GetXXXXXByIdDto).entityId,
       );
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.post(
   "/create",
   validateDtoMiddleware(createXXXXXDto, "body", "zod"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await XXXXXController.create(
-        req.body as CreateXXXXXDto
-      );
+      const response = await XXXXXController.create(req.body as CreateXXXXXDto);
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.patch(
   "/",
   validateDtoMiddleware(updateXXXXXDto, "body", "zod"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await XXXXXController.update(
-        req.body as UpdateXXXXXDto
-      );
+      const response = await XXXXXController.update(req.body as UpdateXXXXXDto);
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.delete(
   "/:id",
   validateDtoMiddleware(deleteXXXXXDto, "params", "zod"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await XXXXXController.destroy(req.params as any);
@@ -101,15 +87,13 @@ router.delete(
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.post(
   "/delete",
   validateDtoMiddleware(deleteManyXXXXXDto, "body", "zod"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await XXXXXController.destroyMany(req.body as any);
@@ -117,6 +101,6 @@ router.post(
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 export { router as XXXXXRouter };
