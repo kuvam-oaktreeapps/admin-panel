@@ -20,7 +20,8 @@ const XXXXX = () => {
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<XXXXXType[]>>(null);
-  const { data: entities, refetch: refetchEntities } = fetcher.useQuery<ServerResponse<XXXXXType[]>>("xxxxx");
+  const { data: entities, refetch: refetchEntities } =
+    fetcher.useQuery<ServerResponse<XXXXXType[]>>("xxxxx");
 
   const { mutate: mutateEntities } = fetcher.useMutation<ServerResponse<any>>("/xxxxx/delete", {
     method: "DELETE",
@@ -132,7 +133,12 @@ const XXXXX = () => {
             outlined
             onClick={() => navigate("/xxxxx/edit/" + rowData.id)}
           />
-          <Button icon="pi pi-trash" severity="danger" outlined onClick={() => confirmDelete(rowData)} />
+          <Button
+            icon="pi pi-trash"
+            severity="danger"
+            outlined
+            onClick={() => confirmDelete(rowData)}
+          />
         </span>
       </>
     );
@@ -163,7 +169,13 @@ const XXXXX = () => {
           className="ml-2 opacity-70"
           onClick={() => importCsvInputRef.current?.click()}
         />
-        <input ref={importCsvInputRef} onChange={onFileImport} className="hidden" type="file" accept=".csv" />
+        <input
+          ref={importCsvInputRef}
+          onChange={onFileImport}
+          className="hidden"
+          type="file"
+          accept=".csv"
+        />
       </div>
       <div>
         <span className="p-input-icon-left mr-2">
@@ -205,7 +217,11 @@ const XXXXX = () => {
           >
             <Column selectionMode="multiple" headerStyle={{ width: "4rem" }}></Column>
             {/*TABLE_COLUMNS*/}
-            <Column header="Action" body={actionBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
+            <Column
+              header="Action"
+              body={actionBodyTemplate}
+              headerStyle={{ minWidth: "10rem" }}
+            ></Column>
           </DataTable>
         </div>
       </div>

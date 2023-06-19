@@ -32,19 +32,22 @@ function CreateXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
-  const { mutate: mutateEntity, isLoading } = fetcher.useMutation<ServerResponse<any>>("/xxxxx/create", {
-    onSuccess: () => {
-      navigate("/xxxxx");
+  const { mutate: mutateEntity, isLoading } = fetcher.useMutation<ServerResponse<any>>(
+    "/xxxxx/create",
+    {
+      onSuccess: () => {
+        navigate("/xxxxx");
+      },
+      onError: async ({ data }) => {
+        toast.current?.show({
+          severity: "error",
+          summary: "Error occured",
+          detail: data.message,
+          life: 3000,
+        });
+      },
     },
-    onError: async ({ data }) => {
-      toast.current?.show({
-        severity: "error",
-        summary: "Error occured",
-        detail: data.message,
-        life: 3000,
-      });
-    },
-  });
+  );
 
   const saveEntity = async () => {
     setSubmitted(true);

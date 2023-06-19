@@ -1,9 +1,7 @@
 import Layout from "../layout/layout";
 
 const Dashboard = () => {
-  return (
-    <></>
-  );
+  return <></>;
 };
 
 export default function DashboardPage() {

@@ -25,7 +25,7 @@ const RegisterPage: Page = () => {
 
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
-    { "p-input-filled": layoutConfig.inputStyle === "filled" }
+    { "p-input-filled": layoutConfig.inputStyle === "filled" },
   );
 
   const [errors, setErrors] = useState({ email: false, password: false, userName: false });
@@ -52,7 +52,8 @@ const RegisterPage: Page = () => {
           style={{
             borderRadius: "56px",
             padding: "0.3rem",
-            background: "linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)",
+            background:
+              "linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)",
           }}
         >
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: "53px" }}>
