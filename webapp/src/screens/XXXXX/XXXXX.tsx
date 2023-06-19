@@ -8,7 +8,7 @@ import { Toast } from "primereact/toast";
 import Layout from "@/layout/layout";
 import { XXXXXType } from "@/types/xxxxx";
 import { useNavigate } from "react-router-dom";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 import { ServerResponse } from "@/types/types";
 import { Image } from "primereact/image";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
@@ -20,10 +20,10 @@ const XXXXX = () => {
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<XXXXXType[]>>(null);
-  const { data: entities, refetchData: refetchEntities } =
-    fetcher.useGET<ServerResponse<XXXXXType[]>>("/xxxxx");
+  const { data: entities, refetch: refetchEntities } = fetcher.useQuery<ServerResponse<XXXXXType[]>>("xxxxx");
 
-  const { postData: deleteEntities } = fetcher.usePOST<ServerResponse<any>>("/xxxxx/delete", {
+  const { mutate: mutateEntities } = fetcher.useMutation<ServerResponse<any>>("/xxxxx/delete", {
+    method: "DELETE",
     onSuccess: async ({ message }) => {
       toast.current?.show({
         severity: "success",
@@ -34,18 +34,18 @@ const XXXXX = () => {
 
       refetchEntities().then();
     },
-    onError: async ({ fetchResponse }) => {
-      const error = (await fetchResponse.json()) as ServerResponse<any>;
+    onError: async ({ data }) => {
       toast.current?.show({
         severity: "error",
         summary: "Error occured",
-        detail: error.message,
+        detail: data.message,
         life: 3000,
       });
     },
   });
 
-  const { deleteData } = fetcher.useDELETE<ServerResponse<any>>({
+  const { mutate: mutateEntity } = fetcher.useMutation<ServerResponse<any>>("xxxxx", {
+    method: "DELETE",
     onSuccess: async ({ message }) => {
       toast.current?.show({
         severity: "success",
@@ -55,13 +55,11 @@ const XXXXX = () => {
       });
       refetchEntities().then();
     },
-    onError: async ({ fetchResponse }) => {
-      const error = (await fetchResponse.json()) as ServerResponse<any>;
-
+    onError: async ({ data }) => {
       toast.current?.show({
         severity: "error",
         summary: "Error occured",
-        detail: error.message,
+        detail: data.message,
         life: 3000,
       });
     },
@@ -73,7 +71,7 @@ const XXXXX = () => {
       header: "Delete Confirmation",
       icon: "pi pi-info-circle",
       acceptClassName: "p-button-danger",
-      accept: () => deleteData(`/xxxxx/${rowData.id}`),
+      accept: () => mutateEntity(undefined, { pathname: `/xxxxx/${rowData.id}` }),
     });
   };
 
@@ -83,7 +81,7 @@ const XXXXX = () => {
       header: "Delete Confirmation",
       icon: "pi pi-info-circle",
       acceptClassName: "p-button-danger",
-      accept: () => deleteEntities({ ids: selectedEntities.map((entity) => entity.id) }),
+      accept: () => mutateEntities({ ids: selectedEntities.map((entity) => entity.id) }),
     });
   };
 

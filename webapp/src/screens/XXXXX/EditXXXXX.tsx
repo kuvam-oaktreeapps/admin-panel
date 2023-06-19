@@ -16,7 +16,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { RadioButton } from "primereact/radiobutton";
 import { InputSwitch } from "primereact/inputswitch";
 import { FileUpload } from "primereact/fileupload";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 import { ServerResponse } from "@/types/types";
 import { BASE_URL } from "@/constants";
 import { getBase64Url } from "@/utils/images";
@@ -36,21 +36,20 @@ function EditXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
-  fetcher.useGET<ServerResponse<XXXXXType>>(`/xxxxx/${id}`, {
+  fetcher.useQuery<ServerResponse<XXXXXType>>(`/xxxxx/${id}`, {
     onSuccess: (response) => setEntity(response.data),
   });
 
-  const { patchData: patchEntity, isLoading } = fetcher.usePATCH({
+  const { mutate: mutateEntity, isLoading } = fetcher.useMutation("/", {
+    method: "PATCH",
     onSuccess: () => {
       navigate("/xxxxx");
     },
-    onError: async ({ fetchResponse }) => {
-      const error = (await fetchResponse.json()) as ServerResponse<any>;
-
+    onError: async ({ data }) => {
       toast.current?.show({
         severity: "error",
         summary: "Error occured",
-        detail: error.message,
+        detail: data.message,
         life: 3000,
       });
     },
@@ -58,7 +57,7 @@ function EditXXXXX() {
 
   const saveEntity = async () => {
     setSubmitted(true);
-    /*VALIDATE_FIELDS*/ await patchEntity(`/xxxxx`, entity);
+    /*VALIDATE_FIELDS*/ await mutateEntity(`/xxxxx`, entity);
   };
 
   const onInputChange = (value: any, name: string) => {

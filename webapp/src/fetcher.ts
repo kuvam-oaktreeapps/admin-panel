@@ -1,4 +1,4 @@
-import { createFetcher } from "@dazeus/usefetcher";
+import { createFetcher } from "@oaktree/react-fetcher";
 import { BASE_URL } from "@/constants";
 
 export const fetcher = createFetcher({

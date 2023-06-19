@@ -7,12 +7,12 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Page } from "../types/types";
 import { useNavigate } from "react-router-dom";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 
 const RegisterPage: Page = () => {
   const navigate = useNavigate();
 
-  const { postData, isLoading } = fetcher.usePOST("/admin/register", {
+  const { mutate, isLoading } = fetcher.useMutation("/admin/register", {
     onSuccess: () => {
       navigate("/");
     },
@@ -42,7 +42,7 @@ const RegisterPage: Page = () => {
       return;
     }
 
-    postData({ userName, emailId, password });
+    mutate({ userName, emailId, password });
   };
 
   return (

@@ -15,7 +15,7 @@ import { useRef, useState } from "react";
 import { RadioButton } from "primereact/radiobutton";
 import { InputSwitch } from "primereact/inputswitch";
 import { FileUpload } from "primereact/fileupload";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 import { ServerResponse } from "@/types/types";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants";
@@ -32,16 +32,15 @@ function CreateXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
-  const { postData: postEntity, isLoading } = fetcher.usePOST<ServerResponse<any>>("/xxxxx/create", {
+  const { mutate: mutateEntity, isLoading } = fetcher.useMutation<ServerResponse<any>>("/xxxxx/create", {
     onSuccess: () => {
       navigate("/xxxxx");
     },
-    onError: async ({ fetchResponse }) => {
-      const error = (await fetchResponse.json()) as ServerResponse<any>;
+    onError: async ({ data }) => {
       toast.current?.show({
         severity: "error",
         summary: "Error occured",
-        detail: error.message,
+        detail: data.message,
         life: 3000,
       });
     },
@@ -50,7 +49,7 @@ function CreateXXXXX() {
   const saveEntity = async () => {
     setSubmitted(true);
 
-    /*VALIDATE_FIELDS*/ await postEntity(entity);
+    /*VALIDATE_FIELDS*/ await mutateEntity(entity);
   };
 
   const onInputChange = (value: any, name: string) => {

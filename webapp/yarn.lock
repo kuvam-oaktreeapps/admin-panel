@@ -249,13 +249,6 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@dazeus/usefetcher@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@dazeus/usefetcher/-/usefetcher-0.1.7.tgz#000ff7ef1b9c29b2f7d9125964289bdf2ab88b57"
-  integrity sha512-e1yx//nbUnFPM7873ZlWrOOjmQieLbBhydJ9+sqO0JSmoVJWLcD1yhNoqbm+qEXN4W7SomTq4aCwUch170XlhA==
-  dependencies:
-    react "^18.2.0"
-
 "@esbuild/android-arm@0.15.18":
   version "0.15.18"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm/-/android-arm-0.15.18.tgz#266d40b8fdcf87962df8af05b76219bc786b4f80"
@@ -307,6 +300,13 @@
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
   integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
+
+"@oaktree/react-fetcher@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@oaktree/react-fetcher/-/react-fetcher-1.0.9.tgz#9056ac18a0691fe7f65e73b63a425cec2eefa293"
+  integrity sha512-gosx7Dpf29s4aPIy9xrpqUvVgtdRP4spmvl6+4O3KLC4nPkx/XJJDIE39vh3AcTb1+ulgT7a0r9g171Zng3rvw==
+  dependencies:
+    react "^18.2.0"
 
 "@remix-run/router@1.5.0":
   version "1.5.0"

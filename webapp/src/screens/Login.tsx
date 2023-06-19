@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Page } from "../types/types";
 import { useNavigate } from "react-router-dom";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 import { Toast } from "primereact/toast";
 
 const LoginPage: Page = () => {
@@ -15,14 +15,12 @@ const LoginPage: Page = () => {
 
   const navigate = useNavigate();
 
-  const { postData, isLoading } = fetcher.usePOST<any>("/admin/login", {
+  const { mutate, isLoading } = fetcher.useMutation<any>("/admin/login", {
     onSuccess: (resData) => {
       localStorage.setItem("auth_token", resData.data.accessToken);
       navigate("/dashboard");
     },
-    onError: async ({ fetchResponse }) => {
-      const data = await fetchResponse.json();
-
+    onError: async ({ data }) => {
       toast.current?.show({ severity: "error", summary: "Error", detail: data.message });
     },
   });
@@ -49,7 +47,7 @@ const LoginPage: Page = () => {
       return;
     }
 
-    postData({ emailId, password });
+    mutate({ emailId, password });
   };
 
   return (
