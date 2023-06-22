@@ -7,7 +7,7 @@ const AppFooter = () => {
   return (
     <div className="layout-footer">
       <img
-        src={`https://www.oaktreeapps.com/images/logo.svg`}
+        src={`https://oaktreeapps.com/images/logo.svg`}
         alt="Logo"
         height="20"
         className="mr-2"

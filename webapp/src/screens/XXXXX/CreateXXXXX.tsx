@@ -1,26 +1,28 @@
-import Layout from "@/layout/layout";
-import { XXXXXType } from "@/types/xxxxx";
-import { Calendar } from "primereact/calendar";
-import { Password } from "primereact/password";
-import { ColorPicker } from "primereact/colorpicker";
-import { Editor } from "primereact/editor";
 import { Button } from "primereact/button";
 import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import Layout from "@/layout/layout";
+import { XXXXXType } from "@/types/xxxxx";
 import { useRef, useState } from "react";
-import { RadioButton } from "primereact/radiobutton";
-import { InputSwitch } from "primereact/inputswitch";
-import { FileUpload } from "primereact/fileupload";
 import { fetcher } from "@/fetcher";
 import { ServerResponse } from "@/types/types";
-import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants";
 import { getBase64Url } from "@/utils/images";
-import ImageUpload from "@/components/ImageUpload";
+import FormInputText from "@/components/FormFields/FormInputText";
+import FormInputDropdown from "@/components/FormFields/FormInputDropdown";
+import FormInputTextarea from "@/components/FormFields/FormInputTextarea";
+import FormInputCalendar from "@/components/FormFields/FormInputCalendar";
+import FormInputColorPicker from "@/components/FormFields/FormInputColorPicker";
+import FormInputEditor from "@/components/FormFields/FormInputEditor";
+import FormInputNumber from "@/components/FormFields/FormInputNumber";
+import FormInputSwitch from "@/components/FormFields/FormInputSwitch";
+import FormInputRadio from "@/components/FormFields/FormInputRadio";
+import FormInputUpload from "@/components/FormFields/FormInputUpload";
+import FormInputPassword from "@/components/FormFields/FormInputPassword";
 
 function CreateXXXXX() {
   const initialState: XXXXXType = {
@@ -29,8 +31,6 @@ function CreateXXXXX() {
 
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
-  const [entity, setEntity] = useState(initialState);
-  const [submitted, setSubmitted] = useState(false);
 
   const { mutate: mutateEntity, isLoading } = fetcher.useMutation<ServerResponse<any>>(
     "/xxxxx/create",
@@ -49,24 +49,10 @@ function CreateXXXXX() {
     },
   );
 
-  const saveEntity = async () => {
-    setSubmitted(true);
+  const { control, handleSubmit } = useForm<XXXXXType>({ defaultValues: initialState });
 
-    /*VALIDATE_FIELDS*/ await mutateEntity(entity);
-  };
-
-  const onInputChange = (value: any, name: string) => {
-    let newEntity = { ...entity };
-    newEntity[`${name}`] = value;
-
-    setEntity(newEntity);
-  };
-
-  const onInputNumberChange = (value: any, name: string) => {
-    let newEntity = { ...entity };
-    newEntity[`${name}`] = value;
-
-    setEntity(newEntity);
+  const saveEntity = async (data: XXXXXType) => {
+    await mutateEntity(data);
   };
 
   return (
@@ -86,9 +72,7 @@ function CreateXXXXX() {
               </Link>
             </div>
 
-            <div className="p-card-content form">
-              <div className="flex flex-wrap align-items-end gap-3">{/*INPUT_FIELDS*/}</div>
-            </div>
+            <div className="p-card-content form">{/*INPUT_FIELDS*/}</div>
 
             <div className="p-card-footer">
               <Button
@@ -96,7 +80,7 @@ function CreateXXXXX() {
                 label="Save"
                 icon="pi pi-check"
                 loading={isLoading}
-                onClick={saveEntity}
+                onClick={handleSubmit(saveEntity)}
               />
             </div>
           </div>

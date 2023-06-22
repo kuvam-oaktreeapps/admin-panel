@@ -11,19 +11,21 @@ import { Button } from "primereact/button";
 
 interface Props {
   fieldName: string;
-  submitted: boolean;
   folder: string;
-  entity: any;
+  value: any;
+  error: boolean;
   onUpload: (url: string) => any;
 }
 
-export default function ImageUpload({ folder, fieldName, submitted, entity, onUpload }: Props) {
+export default function ImageUpload({ folder, fieldName, value, onUpload, error }: Props) {
   const toastRef = useRef<Toast>(null);
   const [onEditPage, setEdit] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
+
   useEffect(() => {
-    setEdit(window.location.pathname.includes("/edit/") && entity[fieldName]);
-  }, [entity]);
+    setEdit(window.location.pathname.includes("/edit/") && value);
+  }, [value]);
+
   const itemTemplate = (file, props) => {
     return (
       <div className="flex align-items-center flex-wrap">
@@ -75,9 +77,9 @@ export default function ImageUpload({ folder, fieldName, submitted, entity, onUp
 
         <p>{getLabel(fieldName)}</p>
         <div className="relative w-max">
-          {entity[fieldName] && (
+          {value && (
             <>
-              <Image preview src={entity[fieldName]} width="250" className="border-circle" />
+              <Image preview src={value} width="250" className="border-circle" />
               <div
                 style={{ position: "absolute", top: 10, right: 10 }}
                 className="bg-blue-500 border-circle cursor-pointer"
@@ -92,12 +94,12 @@ export default function ImageUpload({ folder, fieldName, submitted, entity, onUp
     );
   } else {
     return (
-      <div className="field w-full">
+      <div className={classNames("field w-full", { "p-invalid": error })}>
         <Toast ref={toastRef} />
 
         <p>{getLabel(fieldName)}</p>
         <FileUpload
-          className={classNames({ "p-invalid": submitted && !entity[fieldName], "w-full": true })}
+          className="w-full"
           accept="image/*"
           mode="advanced"
           customUpload

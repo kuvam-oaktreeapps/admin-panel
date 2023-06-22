@@ -21,7 +21,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     <div className="layout-topbar">
       <a href="/" className="layout-topbar-logo">
         <img
-          src={`https://www.oaktreeapps.com/images/logo.svg`}
+          src={`https://oaktreeapps.com/images/logo.svg`}
           width="47.22px"
           height={"35px"}
           alt="logo"
