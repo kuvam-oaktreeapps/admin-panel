@@ -12,16 +12,20 @@ import { fetcher } from "@/fetcher";
 import { ServerResponse } from "@/types/types";
 import { Image } from "primereact/image";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import Datatable from "@/components/Datatable";
 
 const XXXXX = () => {
   const navigate = useNavigate();
-  const importCsvInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedEntities, setSelectedEntities] = useState<XXXXXType[]>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
+
   const toast = useRef<Toast>(null);
-  const dt = useRef<DataTable<XXXXXType[]>>(null);
-  const { data: entities, refetch: refetchEntities } =
-    fetcher.useQuery<ServerResponse<XXXXXType[]>>("xxxxx");
+
+  const [selectedEntities, setSelectedEntities] = useState<XXXXXType[]>([]);
+
+  const {
+    data: entities,
+    refetch: refetchEntities,
+    isLoading: isLoadingEntities,
+  } = fetcher.useQuery<ServerResponse<XXXXXType[]>>("xxxxx");
 
   const { mutate: mutateEntities } = fetcher.useMutation<ServerResponse<any>>("/xxxxx/delete", {
     method: "DELETE",
@@ -86,10 +90,6 @@ const XXXXX = () => {
     });
   };
 
-  const exportCSV = () => {
-    dt.current?.exportCSV();
-  };
-
   const onFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {
     const csvFile = e.target.files?.[0];
     if (!csvFile) return;
@@ -145,52 +145,6 @@ const XXXXX = () => {
   };
   // ------- Column Body Templates --------
 
-  const header = (
-    <div className="flex justify-content-between">
-      <div>
-        <Button
-          label="Delete Selected"
-          icon="pi pi-trash"
-          severity="danger"
-          onClick={confirmBulkDelete}
-          disabled={!selectedEntities || !selectedEntities.length}
-        />
-        <Button
-          label="Export"
-          icon="pi pi-upload"
-          severity="secondary"
-          onClick={exportCSV}
-          className="ml-2 opacity-70"
-        />
-        <Button
-          label="Import CSV"
-          icon="pi pi-file-import"
-          severity="secondary"
-          className="ml-2 opacity-70"
-          onClick={() => importCsvInputRef.current?.click()}
-        />
-        <input
-          ref={importCsvInputRef}
-          onChange={onFileImport}
-          className="hidden"
-          type="file"
-          accept=".csv"
-        />
-      </div>
-      <div>
-        <span className="p-input-icon-left mr-2">
-          <i className="pi pi-search" />
-          <InputText
-            type="search"
-            onInput={(e) => setGlobalFilter(e.currentTarget.value)}
-            placeholder="Search..."
-          />
-        </span>
-        <Button label="Add New" icon="pi pi-plus" onClick={() => navigate("/xxxxx/create")} />
-      </div>
-    </div>
-  );
-
   return (
     <div className="grid crud-demo">
       <div className="col-12">
@@ -198,22 +152,14 @@ const XXXXX = () => {
           <Toast ref={toast} />
           <ConfirmDialog />
           <h4 className="mt-0">Manage xxxxx</h4>
-          <DataTable
-            ref={dt}
+          <Datatable
+            dataKey="id"
+            isLoading={isLoadingEntities}
             value={entities?.data || []}
             selection={selectedEntities}
             onSelectionChange={(e) => setSelectedEntities(e.value as XXXXXType[])}
-            dataKey="id"
-            paginator
-            rows={10}
-            rowsPerPageOptions={[5, 10, 25]}
-            className="datatable-responsive"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} xxxxx"
-            globalFilter={globalFilter}
-            emptyMessage="No xxxxx found."
-            header={header}
-            responsiveLayout="scroll"
+            confirmBulkDelete={confirmBulkDelete}
+            onFileImport={onFileImport}
           >
             <Column selectionMode="multiple" headerStyle={{ width: "4rem" }}></Column>
             {/*TABLE_COLUMNS*/}
@@ -222,7 +168,7 @@ const XXXXX = () => {
               body={actionBodyTemplate}
               headerStyle={{ minWidth: "10rem" }}
             ></Column>
-          </DataTable>
+          </Datatable>
         </div>
       </div>
     </div>
