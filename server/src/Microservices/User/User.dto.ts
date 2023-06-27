@@ -1,12 +1,5 @@
 import { Transform } from "class-transformer";
-import {
-  IsNotEmpty,
-  IsString,
-  IsEmail,
-  IsEnum,
-  IsMongoId,
-  IsBoolean,
-} from "class-validator";
+import { IsNotEmpty, IsString, IsEmail, IsEnum, IsMongoId, IsBoolean } from "class-validator";
 import { UserRole } from "../../CommonConstants";
 import { IsOptional2 } from "../Common.dto";
 import "reflect-metadata";
@@ -14,9 +7,7 @@ import "reflect-metadata";
 export class UserLoginDto {
   @IsEmail()
   @IsNotEmpty()
-  @Transform(({ value }) =>
-    typeof value === "string" ? value.toLowerCase().trim() : value
-  )
+  @Transform(({ value }) => (typeof value === "string" ? value.toLowerCase().trim() : value))
   emailId!: string;
 
   @IsString()
@@ -35,9 +26,7 @@ export class UserRegisterDto {
 
   @IsEmail()
   @IsNotEmpty()
-  @Transform(({ value }) =>
-    typeof value === "string" ? value.toLowerCase().trim() : value
-  )
+  @Transform(({ value }) => (typeof value === "string" ? value.toLowerCase().trim() : value))
   emailId!: string;
 
   @IsOptional2()

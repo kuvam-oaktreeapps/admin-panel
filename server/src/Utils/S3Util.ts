@@ -37,7 +37,7 @@ class S3Util {
     key: string,
     maxContentLengthInBytes: number,
     expiresInSecs: number,
-    acl: string
+    acl: string,
   ): { url: string; fields: any } {
     try {
       const params = {

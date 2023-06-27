@@ -6,10 +6,7 @@ const tag = "PasswordUtil";
 const saltRounds = 10;
 
 export const PasswordUtil = {
-  async checkHash(data: {
-    password: string;
-    hashBase64: string;
-  }): Promise<boolean> {
+  async checkHash(data: { password: string; hashBase64: string }): Promise<boolean> {
     try {
       const { password, hashBase64 } = data;
 

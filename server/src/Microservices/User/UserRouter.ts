@@ -14,14 +14,12 @@ import { AuthorizationRole } from "../../CommonConstants";
 import { RequestHandler } from "../../CommonHttpServer/RequestHandler";
 
 const router = express.Router();
-router.use(express.json())
+router.use(express.json());
 
 router.post(
   "/register",
   validateDtoMiddleware(UserRegisterDto, "body"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.ADMIN,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.ADMIN]),
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await UserController.registerUser(req.body);
@@ -29,7 +27,7 @@ router.post(
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.post(
@@ -43,7 +41,7 @@ router.post(
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.get(
@@ -56,32 +54,30 @@ router.get(
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await UserController.getUserProfile(
-        (req.params as any as GetUserProfileByIdDto).userId
+        (req.params as any as GetUserProfileByIdDto).userId,
       );
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 router.put(
   "/password",
   validateDtoMiddleware(UpdatePasswordDto, "body"),
-  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.USER,
-  ]),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [AuthorizationRole.USER]),
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await UserController.updatePassword(
         req.body,
-        RequestHandler.getJwtPayload(req)
+        RequestHandler.getJwtPayload(req),
       );
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 export { router as UserRouter };

@@ -7,12 +7,12 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Page } from "../types/types";
 import { useNavigate } from "react-router-dom";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 
 const RegisterPage: Page = () => {
   const navigate = useNavigate();
 
-  const { postData, isLoading } = fetcher.usePOST("/admin/register", {
+  const { mutate, isLoading } = fetcher.useMutation("/admin/register", {
     onSuccess: () => {
       navigate("/");
     },
@@ -25,7 +25,7 @@ const RegisterPage: Page = () => {
 
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
-    { "p-input-filled": layoutConfig.inputStyle === "filled" }
+    { "p-input-filled": layoutConfig.inputStyle === "filled" },
   );
 
   const [errors, setErrors] = useState({ email: false, password: false, userName: false });
@@ -42,7 +42,7 @@ const RegisterPage: Page = () => {
       return;
     }
 
-    postData({ userName, emailId, password });
+    mutate({ userName, emailId, password });
   };
 
   return (
@@ -52,7 +52,8 @@ const RegisterPage: Page = () => {
           style={{
             borderRadius: "56px",
             padding: "0.3rem",
-            background: "linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)",
+            background:
+              "linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)",
           }}
         >
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: "53px" }}>

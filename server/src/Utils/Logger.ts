@@ -18,7 +18,7 @@ const consoleTransport = new Winston.transports.Console({
   format: Winston.format.combine(
     Winston.format.colorize({
       all: true,
-    })
+    }),
   ),
   handleExceptions: true,
   handleRejections: true,
@@ -62,13 +62,9 @@ const winstonLogger = Winston.createLogger({
   format: Winston.format.combine(
     myFormatter,
     Winston.format.timestamp(),
-    Winston.format.json({ deterministic: false, space: 1 })
+    Winston.format.json({ deterministic: false, space: 1 }),
   ), //print in json format along with timestamp
-  transports: [
-    consoleTransport,
-    fileRotationWarnTransport,
-    fileRotationCombinedTransport,
-  ],
+  transports: [consoleTransport, fileRotationWarnTransport, fileRotationCombinedTransport],
 });
 
 interface ErrorInfoI {

@@ -1,5 +1,9 @@
 import { PasswordUtil } from "../../Security/PasswordUtil";
-import { ADMIN_JWT_EXPIRY_IN_SECS, AuthorizationRole, HttpStatusCodes } from "../../CommonConstants";
+import {
+  ADMIN_JWT_EXPIRY_IN_SECS,
+  AuthorizationRole,
+  HttpStatusCodes,
+} from "../../CommonConstants";
 import { ApiResponseI } from "../../CommonHttpServer/ResponseHandler";
 import { AdminUserModel, IAdminUserEntity } from "../../Database/Entities/AdminUserEntity";
 import { AuthTokenI, JwtTokenTypes } from "../../Security/JwtConfig";
@@ -88,7 +92,7 @@ export const AdminUserController = {
       const accessToken: string = await JwtController.createToken(
         JwtTokenTypes.AUTH_TOKEN,
         payload,
-        input.expireInSec || ADMIN_JWT_EXPIRY_IN_SECS
+        input.expireInSec || ADMIN_JWT_EXPIRY_IN_SECS,
       );
 
       const data: AdminUserLoginResponseI = {

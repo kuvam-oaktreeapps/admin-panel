@@ -1,26 +1,28 @@
 import Layout from "@/layout/layout";
 import { XXXXXType } from "@/types/xxxxx";
-import { Calendar } from "primereact/calendar";
-import { Password } from "primereact/password";
-import { ColorPicker } from "primereact/colorpicker";
-import { Editor } from "primereact/editor";
 import { Button } from "primereact/button";
-import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
-import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
+import { InputNumberValueChangeEvent } from "primereact/inputnumber";
+import { DropdownChangeEvent } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { RadioButton } from "primereact/radiobutton";
-import { InputSwitch } from "primereact/inputswitch";
-import { FileUpload } from "primereact/fileupload";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 import { ServerResponse } from "@/types/types";
 import { BASE_URL } from "@/constants";
 import { getBase64Url } from "@/utils/images";
-import ImageUpload from "@/components/ImageUpload";
+import FormInputText from "@/components/FormFields/FormInputText";
+import FormInputDropdown from "@/components/FormFields/FormInputDropdown";
+import FormInputTextarea from "@/components/FormFields/FormInputTextarea";
+import FormInputCalendar from "@/components/FormFields/FormInputCalendar";
+import FormInputColorPicker from "@/components/FormFields/FormInputColorPicker";
+import FormInputEditor from "@/components/FormFields/FormInputEditor";
+import FormInputNumber from "@/components/FormFields/FormInputNumber";
+import FormInputSwitch from "@/components/FormFields/FormInputSwitch";
+import FormInputRadio from "@/components/FormFields/FormInputRadio";
+import FormInputUpload from "@/components/FormFields/FormInputUpload";
+import FormInputPassword from "@/components/FormFields/FormInputPassword";
+import { useForm } from "react-hook-form";
 
 function EditXXXXX() {
   const params = useParams();
@@ -33,46 +35,28 @@ function EditXXXXX() {
 
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
-  const [entity, setEntity] = useState(initialState);
-  const [submitted, setSubmitted] = useState(false);
 
-  fetcher.useGET<ServerResponse<XXXXXType>>(`/xxxxx/${id}`, {
-    onSuccess: (response) => setEntity(response.data),
-  });
+  const entity = fetcher.useQuery<ServerResponse<XXXXXType>>(`/xxxxx/${id}`);
 
-  const { patchData: patchEntity, isLoading } = fetcher.usePATCH({
+  const { mutate: mutateEntity, isLoading } = fetcher.useMutation("/", {
+    method: "PATCH",
     onSuccess: () => {
       navigate("/xxxxx");
     },
-    onError: async ({ fetchResponse }) => {
-      const error = (await fetchResponse.json()) as ServerResponse<any>;
-
+    onError: async ({ data }) => {
       toast.current?.show({
         severity: "error",
         summary: "Error occured",
-        detail: error.message,
+        detail: data.message,
         life: 3000,
       });
     },
   });
 
-  const saveEntity = async () => {
-    setSubmitted(true);
-    /*VALIDATE_FIELDS*/ await patchEntity(`/xxxxx`, entity);
-  };
+  const { control, handleSubmit } = useForm<XXXXXType>({ defaultValues: entity.data?.data });
 
-  const onInputChange = (value: any, name: string) => {
-    let newEntity = { ...entity };
-    newEntity[`${name}`] = value;
-
-    setEntity(newEntity);
-  };
-
-  const onInputNumberChange = (value: any, name: string) => {
-    let newEntity = { ...entity };
-    newEntity[`${name}`] = value;
-
-    setEntity(newEntity);
+  const saveEntity = async (data: XXXXXType) => {
+    await mutateEntity(`/xxxxx`, data);
   };
 
   return (
@@ -102,7 +86,7 @@ function EditXXXXX() {
                 label="Save"
                 icon="pi pi-check"
                 loading={isLoading}
-                onClick={saveEntity}
+                onClick={handleSubmit(saveEntity)}
               />
             </div>
           </div>

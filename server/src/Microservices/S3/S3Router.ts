@@ -19,7 +19,7 @@ router.post(
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
     }
-  }
+  },
 );
 
 export { router as S3Router };

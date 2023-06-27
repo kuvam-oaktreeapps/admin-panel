@@ -37,7 +37,7 @@ const validateUsingZodSchema = (dto: ZodSchema, input: any) => {
 export const validateDtoMiddleware = function (
   dto: any,
   propertyToValidate: "body" | "query" | "params",
-  using: "class-validator" | "zod" = "class-validator"
+  using: "class-validator" | "zod" = "class-validator",
 ) {
   return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     let input: any = {};

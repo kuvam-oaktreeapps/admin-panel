@@ -17,7 +17,7 @@ export const JwtUtils = {
   verifyJWTToken(
     token: string | null,
     pubKey: string,
-    allowExpired: boolean
+    allowExpired: boolean,
   ): Promise<JWTTokenVerificationResult> {
     return new Promise(async (resolve) => {
       if (!token) {
@@ -28,55 +28,46 @@ export const JwtUtils = {
           errCode: HttpStatusCodes.UNAUTHORIZED,
         });
       } else {
-        jwt.verify(
-          token,
-          pubKey,
-          { algorithms: [JWTAlgorithm] },
-          (err, payload) => {
-            if (err || !payload) {
-              if (err && err instanceof jwt.TokenExpiredError) {
-                if (allowExpired) {
-                  resolve({
-                    isVerified: true,
-                    errorMessage: null,
-                    payload: this.decodeJWTToken(token),
-                    errCode: 0,
-                  });
-                } else {
-                  return resolve({
-                    isVerified: false,
-                    errorMessage: "Expired",
-                    payload: null,
-                    errCode: HttpStatusCodes.UNAUTHORIZED,
-                  });
-                }
+        jwt.verify(token, pubKey, { algorithms: [JWTAlgorithm] }, (err, payload) => {
+          if (err || !payload) {
+            if (err && err instanceof jwt.TokenExpiredError) {
+              if (allowExpired) {
+                resolve({
+                  isVerified: true,
+                  errorMessage: null,
+                  payload: this.decodeJWTToken(token),
+                  errCode: 0,
+                });
               } else {
                 return resolve({
                   isVerified: false,
-                  errorMessage: "Not Authorized",
+                  errorMessage: "Expired",
                   payload: null,
                   errCode: HttpStatusCodes.UNAUTHORIZED,
                 });
               }
             } else {
               return resolve({
-                isVerified: true,
-                errorMessage: null,
-                payload,
-                errCode: 0,
+                isVerified: false,
+                errorMessage: "Not Authorized",
+                payload: null,
+                errCode: HttpStatusCodes.UNAUTHORIZED,
               });
             }
+          } else {
+            return resolve({
+              isVerified: true,
+              errorMessage: null,
+              payload,
+              errCode: 0,
+            });
           }
-        );
+        });
       }
     });
   },
 
-  generateJWTToken(
-    payload: any,
-    pvtKey: string,
-    expiryTimeStampInSecs?: number
-  ): Promise<string> {
+  generateJWTToken(payload: any, pvtKey: string, expiryTimeStampInSecs?: number): Promise<string> {
     return new Promise((resolve, reject) => {
       const signOptions: jwt.SignOptions = {
         algorithm: JWTAlgorithm,

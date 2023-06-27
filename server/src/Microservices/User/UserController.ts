@@ -109,7 +109,7 @@ export const UserController = {
       const accessToken: string = await JwtController.createToken(
         JwtTokenTypes.AUTH_TOKEN,
         payload,
-        USER_JWT_EXPIRY_IN_SECS
+        USER_JWT_EXPIRY_IN_SECS,
       );
 
       const data: UserLoginOtpVerifyResponseI = {
@@ -166,10 +166,7 @@ export const UserController = {
     }
   },
 
-  async updatePassword(
-    input: UpdatePasswordDto,
-    payload: AuthTokenI
-  ): Promise<ApiResponseI> {
+  async updatePassword(input: UpdatePasswordDto, payload: AuthTokenI): Promise<ApiResponseI> {
     try {
       const { newPassword } = input;
       const { userId } = payload;

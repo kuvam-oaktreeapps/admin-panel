@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Page } from "../types/types";
 import { useNavigate } from "react-router-dom";
-import { fetcher } from "@/usefetcher";
+import { fetcher } from "@/fetcher";
 import { Toast } from "primereact/toast";
 
 const LoginPage: Page = () => {
@@ -15,14 +15,12 @@ const LoginPage: Page = () => {
 
   const navigate = useNavigate();
 
-  const { postData, isLoading } = fetcher.usePOST<any>("/admin/login", {
+  const { mutate, isLoading } = fetcher.useMutation<any>("/admin/login", {
     onSuccess: (resData) => {
       localStorage.setItem("auth_token", resData.data.accessToken);
       navigate("/dashboard");
     },
-    onError: async ({ fetchResponse }) => {
-      const data = await fetchResponse.json();
-
+    onError: async ({ data }) => {
       toast.current?.show({ severity: "error", summary: "Error", detail: data.message });
     },
   });
@@ -33,7 +31,7 @@ const LoginPage: Page = () => {
 
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
-    { "p-input-filled": layoutConfig.inputStyle === "filled" }
+    { "p-input-filled": layoutConfig.inputStyle === "filled" },
   );
 
   const [errors, setErrors] = useState({ email: false, password: false });
@@ -49,7 +47,7 @@ const LoginPage: Page = () => {
       return;
     }
 
-    postData({ emailId, password });
+    mutate({ emailId, password });
   };
 
   return (
@@ -65,7 +63,8 @@ const LoginPage: Page = () => {
           style={{
             borderRadius: "56px",
             padding: "0.3rem",
-            background: "linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)",
+            background:
+              "linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)",
           }}
         >
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: "53px" }}>
