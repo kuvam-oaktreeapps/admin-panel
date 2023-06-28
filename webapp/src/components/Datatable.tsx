@@ -11,6 +11,7 @@ interface Props {
   selection: any[];
   dataKey: string;
   isLoading?: boolean;
+  createNewPageUrl: string;
   onFileImport: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectionChange: (event: DataTableSelectionChangeEvent<any>) => void;
   confirmBulkDelete: () => void;
@@ -25,6 +26,7 @@ export default function Datatable({
   onFileImport,
   confirmBulkDelete,
   isLoading = false,
+  createNewPageUrl,
 }: Props) {
   const navigate = useNavigate();
 
@@ -74,7 +76,7 @@ export default function Datatable({
             placeholder="Search..."
           />
         </span>
-        <Button label="Add New" icon="pi pi-plus" onClick={() => navigate("/xxxxx/create")} />
+        <Button label="Add New" icon="pi pi-plus" onClick={() => navigate(createNewPageUrl)} />
       </div>
     </div>
   );
@@ -92,9 +94,9 @@ export default function Datatable({
         rowsPerPageOptions={[5, 10, 25]}
         className="datatable-responsive"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} xxxxx"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
         globalFilter={globalFilter}
-        emptyMessage="No xxxxx found."
+        emptyMessage="No entities found."
         header={header}
         responsiveLayout="scroll"
       >
