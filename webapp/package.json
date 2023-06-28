@@ -10,7 +10,7 @@
     "prettify": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
-    "@oaktree/react-fetcher": "^1.1.3",
+    "@oaktree/react-fetcher": "^1.1.4",
     "chart.js": "^4.2.1",
     "formik": "^2.4.2",
     "primeflex": "^3.3.0",

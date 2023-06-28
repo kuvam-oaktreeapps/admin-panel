@@ -28,7 +28,7 @@ export default function FormInputRadio({ fieldName, inline, control, rules, opti
                 className={classNames({ "p-invalid": fieldState.error })}
               />
 
-              <p className="ml-2 text-sm">${opt.name}</p>
+              <p className="ml-2 text-sm">{opt.name}</p>
             </div>
           ))}
         </div>
