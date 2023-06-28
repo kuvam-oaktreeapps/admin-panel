@@ -28,7 +28,6 @@ const XXXXX = () => {
   } = fetcher.useQuery<ServerResponse<XXXXXType[]>>("xxxxx");
 
   const { mutate: mutateEntities } = fetcher.useMutation<ServerResponse<any>>("/xxxxx/delete", {
-    method: "DELETE",
     onSuccess: async ({ message }) => {
       toast.current?.show({
         severity: "success",
