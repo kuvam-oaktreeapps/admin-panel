@@ -36,8 +36,6 @@ function EditXXXXX() {
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
 
-  const entity = fetcher.useQuery<ServerResponse<XXXXXType>>(`/xxxxx/${id}`);
-
   const { mutate: mutateEntity, isLoading } = fetcher.useMutation("/", {
     method: "PATCH",
     onSuccess: () => {
@@ -53,10 +51,14 @@ function EditXXXXX() {
     },
   });
 
-  const { control, handleSubmit } = useForm<XXXXXType>({ defaultValues: entity.data?.data });
+  const { control, handleSubmit, setValue } = useForm<XXXXXType>();
+
+  fetcher.useQuery<ServerResponse<XXXXXType>>(`/xxxxx/${id}`, {
+    onSuccess: ({ data }) => Object.keys(data).forEach((key: any) => setValue(key, data[key])),
+  });
 
   const saveEntity = async (data: XXXXXType) => {
-    await mutateEntity(`/xxxxx`, data);
+    await mutateEntity(data);
   };
 
   return (
