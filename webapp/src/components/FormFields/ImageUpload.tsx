@@ -97,7 +97,6 @@ export default function ImageUpload({ folder, fieldName, value, onUpload, error 
       <div className={classNames("field w-full", { "p-invalid": error })}>
         <Toast ref={toastRef} />
 
-        <p>{getLabel(fieldName)}</p>
         <FileUpload
           className="w-full"
           accept="image/*"

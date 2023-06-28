@@ -10,7 +10,7 @@ import {
 
 interface Props {
   className?: string;
-  control: Control<FieldValues>;
+  control: Control<any>;
   fieldName: string;
   inline: boolean;
   render: (props: {
