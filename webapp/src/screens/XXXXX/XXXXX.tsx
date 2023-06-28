@@ -75,7 +75,7 @@ const XXXXX = () => {
       header: "Delete Confirmation",
       icon: "pi pi-info-circle",
       acceptClassName: "p-button-danger",
-      accept: () => mutateEntity(undefined, { pathname: `/xxxxx/${rowData.id}` }),
+      accept: () => mutateEntity(undefined, { pathname: `/${rowData.id}` }),
     });
   };
 
@@ -153,6 +153,7 @@ const XXXXX = () => {
           <h4 className="mt-0">Manage xxxxx</h4>
           <Datatable
             dataKey="id"
+            createNewPageUrl="/xxxxx/create"
             isLoading={isLoadingEntities}
             value={entities?.data || []}
             selection={selectedEntities}
