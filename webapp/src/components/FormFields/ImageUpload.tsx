@@ -75,7 +75,6 @@ export default function ImageUpload({ folder, fieldName, value, onUpload, error 
       <div className="field w-full">
         <Toast ref={toastRef} />
 
-        <p>{getLabel(fieldName)}</p>
         <div className="relative w-max">
           {value && (
             <>

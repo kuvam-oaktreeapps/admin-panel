@@ -36,7 +36,7 @@ function EditXXXXX() {
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
 
-  const { mutate: mutateEntity, isLoading } = fetcher.useMutation("/", {
+  const { mutate: mutateEntity, isLoading } = fetcher.useMutation("/xxxxx", {
     method: "PATCH",
     onSuccess: () => {
       navigate("/xxxxx");
