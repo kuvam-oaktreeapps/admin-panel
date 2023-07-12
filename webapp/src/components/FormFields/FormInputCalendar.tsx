@@ -13,7 +13,7 @@ export default function FormInputCalendar({ fieldName, inline, control, rules }:
       render={({ field, fieldState }) => (
         <Calendar
           id={field.name}
-          value={field.value}
+          value={new Date(field.value)}
           onChange={(e) => field.onChange(e.target.value)}
           style={{ width: "100%" }}
           className={classNames({ "p-invalid": fieldState.error })}
