@@ -23,6 +23,7 @@ import FormInputSwitch from "@/components/FormFields/FormInputSwitch";
 import FormInputRadio from "@/components/FormFields/FormInputRadio";
 import FormInputUpload from "@/components/FormFields/FormInputUpload";
 import FormInputPassword from "@/components/FormFields/FormInputPassword";
+import FormInputMultiSelect from "@/components/FormFields/FormInputMultiSelect";
 
 function CreateXXXXX() {
   const initialState: XXXXXType = {
@@ -54,7 +55,14 @@ function CreateXXXXX() {
   const saveEntity = async (data: XXXXXType) => {
     await mutateEntity(data);
   };
-
+  const [selectedCities, setSelectedCities] = useState(null);
+  const cities = [
+    { name: "New York", value: "NY" },
+    { name: "Rome", value: "RM" },
+    { name: "London", value: "LDN" },
+    { name: "Istanbul", value: "IST" },
+    { name: "Paris", value: "PRS" },
+  ];
   return (
     <>
       <Toast ref={toast} />
