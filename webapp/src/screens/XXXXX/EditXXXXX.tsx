@@ -22,6 +22,7 @@ import FormInputSwitch from "@/components/FormFields/FormInputSwitch";
 import FormInputRadio from "@/components/FormFields/FormInputRadio";
 import FormInputUpload from "@/components/FormFields/FormInputUpload";
 import FormInputPassword from "@/components/FormFields/FormInputPassword";
+import FormInputMultiSelect from "@/components/FormFields/FormInputMultiSelect";
 import { useForm } from "react-hook-form";
 
 function EditXXXXX() {
