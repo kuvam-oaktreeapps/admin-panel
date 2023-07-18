@@ -20,7 +20,8 @@ export type CrudField = {
     | "Password"
     | "ColorPicker"
     | "Editor"
-    | "ImageFileUpload";
+    | "ImageFileUpload"
+    | "MultiSelect";
 };
 
 export type Resource = {
@@ -28,4 +29,5 @@ export type Resource = {
   url: string;
   collectionName: string;
   crudFields: CrudField[];
+  only?: "server" | "webapp";
 };
