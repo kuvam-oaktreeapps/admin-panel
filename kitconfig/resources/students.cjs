@@ -40,4 +40,4 @@ const resource = {
   ],
 };
 
-module.exports = resource;
+resource;
